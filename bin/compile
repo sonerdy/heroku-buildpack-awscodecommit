@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+# fail fast
+set -e
+
+# debug
+# set -x
+
+# parse and derive params
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+BUILDPACK_DIR="$(dirname $(dirname $0))"
+
+echo "-----> Putting CodeCommit configuration script into app/.profile.d"
+mkdir -p $BUILD_DIR/.profile.d
+cp "$BUILDPACK_DIR/bin/configure_code_commit.sh" $BUILD_DIR/.profile.d/
+chmod +x $BUILD_DIR/.profile.d/configure_code_commit.sh
+
+echo "-----> CodeCommit configuration complete"
